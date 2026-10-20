@@ -1,0 +1,1768 @@
+@import './variables';
+@import 'bootstrap/scss/bootstrap';
+
+/* --------------------------------- Base --------------------------------- */
+
+body {
+  background: $surface-alt;
+  color: $ink;
+  -webkit-font-smoothing: antialiased;
+}
+
+code {
+  color: $navy;
+  font-size: 0.8125rem;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+/* -------------------------------- Shell --------------------------------- */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: $sidebar-width;
+  }
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.5rem;
+
+  @include media-breakpoint-down(md) {
+    padding: 1rem;
+  }
+}
+
+/* ------------------------------- Sidebar -------------------------------- */
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: $sidebar-width;
+  background: $surface;
+  border-right: 1px solid $line;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  z-index: 1040;
+  transition: transform 0.25s ease;
+
+  @include media-breakpoint-down(lg) {
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba($navy, 0.18);
+
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem 1.75rem;
+  }
+
+  &__close {
+    color: $ink;
+    font-size: 1.25rem;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__section-label {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 0.75rem 0.5rem;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $ink-muted;
+  }
+
+  &__vessel-name {
+    margin-top: 0.15rem;
+    font-size: 0.875rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: $ink;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    color: $ink-secondary;
+    font-weight: 500;
+    isolation: isolate;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $navy;
+    }
+
+    &.active {
+      color: #fff;
+    }
+  }
+
+  &__link-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: $navy;
+    box-shadow: 0 8px 20px rgba($navy, 0.25);
+    z-index: -1;
+  }
+
+  &__link-icon {
+    font-size: 1.125rem;
+  }
+
+  &__promo {
+    margin-top: auto;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: linear-gradient(140deg, $navy 0%, $series-1 100%);
+    color: #fff;
+
+    p {
+      margin: 0.35rem 0 0;
+      font-size: 0.8125rem;
+      opacity: 0.85;
+    }
+  }
+
+  &__promo-title {
+    font-weight: 600;
+  }
+
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba($ink, 0.35);
+    z-index: 1035;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.5rem;
+
+  &:focus-visible {
+    outline: 2px solid $series-1;
+    outline-offset: 4px;
+  }
+
+  &__image {
+    display: block;
+    width: 164px;
+    height: auto;
+  }
+}
+
+/* -------------------------------- Topbar -------------------------------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: $topbar-height;
+  padding: 0.75rem 1.5rem;
+  background: rgba($surface, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid $line;
+
+  @include media-breakpoint-down(md) {
+    padding: 0.75rem 1rem;
+  }
+
+  &__menu {
+    font-size: 1.375rem;
+    color: $ink;
+    padding: 0.25rem;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+  }
+
+  &__heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  &__date {
+    font-size: 0.8125rem;
+    color: $ink-muted;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 0.75rem;
+    background: $navy;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  &__user-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  &__user-role {
+    font-size: 0.75rem;
+    color: $ink-muted;
+  }
+}
+
+.vessel-search {
+  position: relative;
+  flex: 1;
+  max-width: 480px;
+
+  &__icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $ink-muted;
+    pointer-events: none;
+  }
+
+  .form-control {
+    padding: 0.7rem 1rem 0.7rem 2.6rem;
+    border-radius: 0.875rem;
+    background: $surface-alt;
+    border-color: transparent;
+
+    &:focus {
+      background: $surface;
+      border-color: $series-1;
+    }
+  }
+
+  &__results {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.4rem;
+    list-style: none;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 0.875rem;
+    box-shadow: 0 16px 40px rgba($navy, 0.14);
+    z-index: 1050;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+
+    &.is-highlighted {
+      background: $navy-50;
+    }
+  }
+
+  &__name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  &__meta {
+    display: block;
+    font-size: 0.75rem;
+    color: $ink-muted;
+  }
+
+  &__empty {
+    padding: 0.75rem;
+    color: $ink-muted;
+    font-size: 0.875rem;
+  }
+}
+
+/* ------------------------------ Page header ----------------------------- */
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  &__title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  &__subtitle {
+    margin: 0.25rem 0 0;
+    color: $ink-muted;
+  }
+}
+
+/* -------------------------------- Panels -------------------------------- */
+
+.panel {
+  height: 100%;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: 1.125rem;
+  box-shadow: 0 4px 20px rgba($navy, 0.04);
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    padding: 1.25rem 1.5rem 0.5rem;
+  }
+
+  &__title {
+    font-size: 1.0625rem;
+    margin: 0;
+    color: $ink;
+  }
+
+  &__subtitle {
+    margin: 0.15rem 0 0;
+    font-size: 0.8125rem;
+    color: $ink-muted;
+  }
+
+  &__body {
+    padding: 0.75rem 1.5rem 1.5rem;
+  }
+
+  &__body.p-0 {
+    padding: 0.5rem 0 0 !important;
+  }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+
+  &__select {
+    width: auto;
+    min-width: 170px;
+  }
+}
+
+.search-input {
+  position: relative;
+  min-width: 220px;
+
+  &__icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $ink-muted;
+  }
+
+  .form-control {
+    padding-left: 2.25rem;
+  }
+}
+
+/* ------------------------------ Stat cards ------------------------------ */
+
+.stat-card {
+  height: 100%;
+  padding: 1.1rem 1.15rem;
+  border-radius: 1rem;
+  cursor: default;
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.125rem;
+    margin-bottom: 0.85rem;
+  }
+
+  &__value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: $ink;
+  }
+
+  &__label {
+    margin-top: 0.2rem;
+    font-weight: 500;
+    color: $ink-secondary;
+    font-size: 0.875rem;
+  }
+
+  &__hint {
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    color: $ink-muted;
+  }
+
+  @each $tone, $color in ('navy': $series-1, 'teal': $series-2, 'orange': $series-3, 'violet': $series-4) {
+    &--#{$tone} {
+      background: mix($color, #fff, 9%);
+
+      .stat-card__icon {
+        background: $color;
+      }
+    }
+  }
+}
+
+/* ----------------------------- Filter pills ----------------------------- */
+
+.filter-pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: $surface-alt;
+  border-radius: 0.75rem;
+
+  &__item {
+    position: relative;
+    border: 0;
+    background: transparent;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.6rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: $ink-secondary;
+    isolation: isolate;
+
+    &.is-active {
+      color: #fff;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $series-1;
+      outline-offset: 1px;
+    }
+  }
+
+  &__indicator {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: $navy;
+    z-index: -1;
+  }
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  &__count {
+    font-size: 0.6875rem;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    background: rgba($navy, 0.08);
+
+    .is-active & {
+      background: rgba(#fff, 0.2);
+    }
+  }
+}
+
+/* -------------------------------- Badges -------------------------------- */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.35em 0.7em;
+  white-space: nowrap;
+}
+
+.usage-chip {
+  display: inline-block;
+  min-width: 2.5rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba($series-1, 0.35);
+  background: rgba($series-1, 0.06);
+  color: $ink;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: $navy-50;
+  color: $navy;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ------------------------------ Level bars ------------------------------ */
+
+.level-bar {
+  flex: 1;
+  min-width: 80px;
+  height: 6px;
+  border-radius: 999px;
+  background: $line;
+  overflow: hidden;
+
+  &__fill {
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.4s ease;
+
+    &--navy {
+      background: $series-1;
+    }
+
+    &--danger {
+      background: $danger;
+    }
+  }
+}
+
+/* ------------------------------ Data table ------------------------------ */
+
+.data-table {
+  .table {
+    --bs-table-bg: transparent;
+    font-size: 0.875rem;
+
+    th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: $ink-muted;
+      font-weight: 500;
+      border-bottom-color: $line;
+      white-space: nowrap;
+    }
+
+    td {
+      border-bottom-color: $line;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+    }
+  }
+
+  &__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    font: inherit;
+
+    &:hover {
+      color: $navy;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    font-size: 0.8125rem;
+    color: $ink-muted;
+  }
+
+  &__pager {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+}
+
+.top-parts {
+  --bs-table-bg: transparent;
+  font-size: 0.875rem;
+
+  th {
+    font-size: 0.75rem;
+    color: $ink-muted;
+    font-weight: 500;
+    border-bottom-color: $line;
+  }
+
+  td {
+    border-bottom-color: $line;
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem 1rem;
+
+  &__icon {
+    font-size: 2rem;
+    color: $ink-muted;
+    margin-bottom: 0.75rem;
+  }
+
+  &__title {
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &__message {
+    color: $ink-muted;
+    margin: 0.25rem 0 0;
+  }
+}
+
+/* ------------------------------- Fleet map ------------------------------ */
+
+.fleet-map-wrapper {
+  position: relative;
+  height: calc(100vh - 360px);
+  min-height: 460px;
+  border-radius: 0 0 1.125rem 1.125rem;
+  overflow: hidden;
+}
+
+.fleet-map {
+  width: 100%;
+  height: 100%;
+  background: #dfe8f3;
+  font-family: inherit;
+}
+
+.fleet-legend {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 500;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  list-style: none;
+  background: rgba($surface, 0.95);
+  border: 1px solid $line;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  color: $ink-secondary;
+  box-shadow: 0 4px 16px rgba($navy, 0.08);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+}
+
+// Leaflet positions `.leaflet-marker-icon` absolutely; never override `position` here.
+.vessel-marker {
+  background: none;
+  border: 0;
+
+  &__ship {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transition: transform 0.2s ease;
+    filter: drop-shadow(0 2px 3px rgba($navy, 0.35));
+  }
+
+  &:hover &__ship,
+  &:focus &__ship {
+    scale: 1.25;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $navy;
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  &__pulse {
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: rgba($series-2, 0.35);
+    animation: vessel-pulse 2.2s ease-out infinite;
+  }
+}
+
+@keyframes vessel-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vessel-marker__pulse {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Portalled to <body>, above every other layer (sticky topbar is 1020, modals 1050). */
+.floating-tooltip {
+  position: fixed;
+  z-index: 2000;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+
+  &--bottom {
+    transform: translate(-50%, 0);
+  }
+
+  &__box {
+    position: relative;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+    box-shadow: 0 18px 40px rgba($navy, 0.2);
+  }
+
+  &__arrow {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: $surface;
+    border: 1px solid $line;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  &--top &__arrow {
+    bottom: -8px;
+    border-top: 0;
+    border-left: 0;
+  }
+
+  &--bottom &__arrow {
+    top: -8px;
+    border-bottom: 0;
+    border-right: 0;
+  }
+}
+
+.vessel-tooltip {
+  &__card {
+    position: relative;
+    z-index: 1;
+    padding: 1rem 1.1rem;
+    color: $ink;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__name {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &__type {
+    font-size: 0.75rem;
+    color: $ink-muted;
+  }
+
+  &__row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    font-size: 0.8125rem;
+    color: $ink-secondary;
+    margin-bottom: 0.4rem;
+
+    svg {
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+      color: $navy;
+    }
+  }
+
+  &__coords {
+    display: block;
+    font-size: 0.75rem;
+    color: $ink-muted;
+  }
+
+  &__cta {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    color: $navy;
+    font-weight: 500;
+  }
+}
+
+.vessel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.5rem 0.5rem;
+  max-height: calc(100vh - 360px);
+  min-height: 460px;
+  overflow-y: auto;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    color: $ink;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: $navy-50;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  &__meta {
+    font-size: 0.75rem;
+    color: $ink-muted;
+  }
+
+  &__chevron {
+    color: $ink-muted;
+    flex-shrink: 0;
+  }
+}
+
+/* ------------------------------- Weather -------------------------------- */
+
+.weather-summary {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: $navy-50;
+  font-size: 0.8125rem;
+
+  &--loading {
+    display: flex;
+    align-items: center;
+    color: $ink-secondary;
+  }
+
+  &__main {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__icon {
+    color: $navy;
+  }
+
+  &__temp {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  &--compact &__temp {
+    font-size: 1.0625rem;
+  }
+
+  &__label {
+    color: $ink-secondary;
+  }
+
+  &__facts {
+    display: flex;
+    gap: 1.25rem;
+    margin: 0.6rem 0 0;
+
+    dt {
+      font-weight: 400;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: $ink-muted;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+
+  &__source {
+    margin-top: 0.5rem;
+    font-size: 0.6875rem;
+    color: $ink-muted;
+  }
+}
+
+/* -------------------------------- Vessel -------------------------------- */
+
+.vessel-header {
+  margin-bottom: 1rem;
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    color: $ink-muted;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      color: $navy;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__name {
+    font-size: 1.625rem;
+    margin: 0;
+  }
+
+  &__meta {
+    margin: 0.25rem 0 0;
+    color: $ink-muted;
+    font-size: 0.875rem;
+  }
+
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+
+    > div {
+      padding: 0.5rem 0.9rem;
+      background: $surface;
+      border: 1px solid $line;
+      border-radius: 0.75rem;
+    }
+
+    dt {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: $ink-muted;
+      font-weight: 400;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.vessel-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid $line;
+  overflow-x: auto;
+
+  &__item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 1rem;
+    color: $ink-secondary;
+    font-weight: 500;
+    font-size: 0.875rem;
+    white-space: nowrap;
+
+    &:hover,
+    &.active {
+      color: $navy;
+    }
+  }
+
+  &__underline {
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: $navy;
+  }
+}
+
+.position-card {
+  &__location {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.75rem;
+  }
+}
+
+.position-map {
+  height: 170px;
+  border-radius: 0.875rem;
+  overflow: hidden;
+  background: #dfe8f3;
+}
+
+/* -------------------------------- Tabs ---------------------------------- */
+
+.tab-nav {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid $line;
+  overflow-x: auto;
+
+  &__item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 1rem;
+    border: 0;
+    background: none;
+    color: $ink-secondary;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+
+    &:hover,
+    &.is-active {
+      color: $navy;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $series-1;
+      outline-offset: -2px;
+      border-radius: 0.5rem;
+    }
+  }
+
+  &__count {
+    font-size: 0.6875rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: $navy-50;
+    color: $navy;
+  }
+
+  &__underline {
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: $navy;
+  }
+}
+
+/* ------------------------------ Data table ------------------------------ */
+
+.data-table tr.is-clickable {
+  cursor: pointer;
+}
+
+.crew-link {
+  color: $ink;
+  font-weight: 500;
+
+  &:hover {
+    color: $navy;
+    text-decoration: underline;
+  }
+}
+
+.simple-table {
+  --bs-table-bg: transparent;
+  font-size: 0.875rem;
+
+  thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $ink-muted;
+    font-weight: 500;
+  }
+
+  td,
+  th {
+    border-bottom-color: $line;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+/* ---------------------------- Crew profile ------------------------------ */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8125rem;
+  color: $ink-muted;
+
+  &:hover {
+    color: $navy;
+  }
+}
+
+.crew-profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  height: auto;
+
+  &__identity {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    min-width: 0;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, $navy 0%, $series-1 100%);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: 1.375rem;
+    margin: 0;
+  }
+
+  &__rank {
+    margin: 0.2rem 0 0.4rem;
+    color: $ink-secondary;
+  }
+
+  &__contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-size: 0.8125rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: $ink-secondary;
+      word-break: break-all;
+
+      &:hover {
+        color: $navy;
+      }
+    }
+  }
+
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+
+    > div {
+      padding: 0.55rem 0.95rem;
+      border-radius: 0.75rem;
+      background: $surface-alt;
+    }
+
+    dt {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: $ink-muted;
+      font-weight: 400;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.info-list {
+  display: grid;
+  gap: 1rem 1.5rem;
+  margin: 0;
+
+  &--cols-2 {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  &--cols-1 {
+    grid-template-columns: 1fr;
+  }
+
+  dt {
+    font-size: 0.75rem;
+    color: $ink-muted;
+    font-weight: 400;
+    margin-bottom: 0.15rem;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  &__item {
+    position: relative;
+    padding: 0 0 1.25rem 1.75rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 18px;
+      bottom: 0;
+      width: 2px;
+      background: $line;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  &__dot {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid $surface;
+    background: $ink-muted;
+    box-shadow: 0 0 0 1px $line;
+  }
+
+  &__item--current &__dot {
+    background: $series-2;
+  }
+
+  &__item--planned &__dot {
+    background: $series-1;
+  }
+}
+
+.rating-stars {
+  display: inline-flex;
+  gap: 2px;
+  color: #c98a12;
+  font-size: 0.9rem;
+}
+
+.review-average {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__value {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.review-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.review-card {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid $line;
+  border-radius: 0.875rem;
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__comment {
+    margin: 0.75rem 0;
+    color: $ink-secondary;
+    font-style: italic;
+  }
+
+  &__scores {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.6rem 1.5rem;
+    margin: 0;
+
+    dt {
+      font-size: 0.75rem;
+      color: $ink-muted;
+      font-weight: 400;
+    }
+
+    dd {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0;
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.cargo-cell {
+  min-width: 200px;
+}
+
+/* -------------------------------- Engine -------------------------------- */
+
+.section-title {
+  font-size: 1.0625rem;
+  margin: 0.5rem 0 0.85rem;
+}
+
+.engine-note {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: $navy-50;
+  color: $ink-secondary;
+  font-size: 0.875rem;
+}
+
+.reading {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+
+  &--alert {
+    color: $danger;
+    font-weight: 600;
+  }
+
+  &__icon {
+    margin-right: 0.3rem;
+    vertical-align: -0.1em;
+  }
+}
+
+.readings-table {
+  th[scope='row'] {
+    font-size: 0.8125rem;
+    color: $ink-secondary;
+  }
+
+  tr.is-alert {
+    background: rgba($danger, 0.05);
+  }
+
+  &__limit {
+    font-size: 0.6875rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: $ink-muted;
+    font-weight: 400;
+  }
+}
+
+.badge-alert {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba($danger, 0.1);
+  color: $danger;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.engine-alerts {
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba($danger, 0.3);
+  border-radius: 1rem;
+  background: rgba($danger, 0.04);
+
+  &--ok {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-color: rgba($success, 0.3);
+    background: rgba($success, 0.05);
+    color: $success;
+    font-weight: 500;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $danger;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0.5rem 1.5rem;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      border-top: 1px solid rgba($danger, 0.12);
+    }
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    color: $danger;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  &__source,
+  &__range {
+    font-size: 0.75rem;
+    color: $ink-muted;
+    font-weight: 400;
+  }
+
+  &__value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.875rem;
+  }
+}
+
+.aux-engine {
+  padding: 1.25rem 1.5rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__idle {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: $surface-alt;
+    color: $ink-muted;
+    font-size: 0.875rem;
+  }
+}
+
+.oil-samples {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+
+.oil-sample__header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.25rem;
+}
+
+.tank-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.1rem;
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ---------------------------- Route history ----------------------------- */
+
+.route-map-wrapper {
+  position: relative;
+  height: 480px;
+  border-radius: 0 0 1.125rem 1.125rem;
+  overflow: hidden;
+}
+
+.route-map {
+  width: 100%;
+  height: 100%;
+  background: #dfe8f3;
+  font-family: inherit;
+}
+
+.route-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 0;
+  border-top: 3px solid;
+
+  &--selected {
+    border-color: $series-1;
+  }
+
+  &--planned {
+    border-color: $series-2;
+    border-top-style: dashed;
+    border-top-width: 2px;
+  }
+}
+
+.voyage-details__route {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.data-table tr.is-selected > td {
+  background: $navy-50;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+
+  &:hover code,
+  &:focus-visible code {
+    text-decoration: underline;
+  }
+}
+
+/* ------------------------- Scroll containers ----------------------------
+ * These containers scroll sideways on narrow screens. `overflow-x: auto` turns
+ * on vertical scrolling too, so 1px of extra height showed a classic Windows
+ * scrollbar. Lock the vertical axis, and hide the scrollbar on the tab strips
+ * (they still scroll with touch, trackpad or shift + wheel).
+ */
+.vessel-tabs,
+.tab-nav {
+  overflow-y: hidden;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.data-table .table-responsive {
+  overflow-y: hidden;
+}
+
+/* ------------------------------ Not found ------------------------------- */
+
+.not-found {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  background: $surface-alt;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 440px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 32px rgba($navy, 0.06);
+  }
+
+  &__title {
+    margin: 1.75rem 0 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  &__message {
+    margin: 0 0 1.75rem;
+    color: $ink-secondary;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+  }
+}
+
+.port-time {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.3;
+  white-space: nowrap;
+
+  &__time {
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__offset {
+    color: $ink-muted;
+    font-size: 0.75rem;
+  }
+}

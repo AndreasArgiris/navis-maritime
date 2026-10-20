@@ -1,0 +1,44 @@
+// Brand
+$navy: #093274; // brand navy, taken from the Navis emblem
+$navy-700: #062456;
+$navy-50: #eef1fa;
+$ink: #0b0b0f;
+$ink-secondary: #4b5262;
+$ink-muted: #8a90a0;
+$surface: #ffffff;
+$surface-alt: #f6f7fb;
+$line: #eef0f5;
+
+// Chart / accent series (validated categorical order)
+$series-1: #2f4fb5;
+$series-2: #0f9480;
+$series-3: #d9702a;
+$series-4: #8e5bd9;
+
+// Bootstrap overrides
+$primary: $navy;
+$secondary: #5b6475;
+$success: #1e8e5a;
+$info: #2f4fb5;
+$warning: #b7791f;
+$danger: #c62828;
+
+$body-bg: $surface;
+$body-color: $ink;
+$font-family-sans-serif: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-size-base: 0.9375rem;
+$headings-color: $ink;
+$headings-font-weight: 600;
+$border-color: $line;
+$border-radius: 0.625rem;
+$border-radius-lg: 1rem;
+$input-border-color: #e1e4ec;
+$input-focus-border-color: $series-1;
+$input-btn-focus-color: rgba($navy, 0.18);
+$table-hover-bg: $navy-50;
+$table-border-color: $line;
+$link-color: $navy;
+$link-decoration: none;
+
+$sidebar-width: 256px;
+$topbar-height: 76px;
