@@ -5,7 +5,7 @@ dashboard with information and live metrics for every part of vessel like engine
 
 
 ## Routes
-
+'''
 | `/`                               | Fleet world map (hover = pin with position & weather etc.) |
 | `/vessels/:id`                    | Vessel dashboard (contains all the general vessel info) |
 | `/vessels/:id/inventory`          | Multiple tabs for each inventory category|
@@ -15,6 +15,7 @@ dashboard with information and live metrics for every part of vessel like engine
 | `/vessels/:id/crew/:crewId`       | Crew member profile. Tabs: overview · schedule & tickets · medical · certificates · reviews |
 | `/vessels/:id/engine`             | Main engine, cylinders, generators, oil analysis etc. |
 | `/vessels/:id/routes`             | Route history: voyage tracks on a map plus a 12-month voyage log |
+'''
 
 ## Tech Stack
 
