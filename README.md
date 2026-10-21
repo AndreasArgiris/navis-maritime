@@ -16,7 +16,7 @@ dashboard with information and live metrics for every part of vessel like engine
 
  `/vessels/:id/invoices`            Supplier invoices 
 
- `/vessels/:id/crew`                Crew list; click to crew member to open member's profile 
+ `/vessels/:id/crew`                Crew list (click to crew member to open member's profile)
 
  `/vessels/:id/crew/:crewId`        Crew member profile. Tabs: overview · schedule & tickets · medical · certificates · reviews 
 
